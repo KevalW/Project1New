@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Forgot from './forgot';
 import '../App.css';
+import { Link} from 'react-router-dom';
 
 function SignUp() {
+
+
     return (
-        <Router>
             <div className="section">
                 <div className="container">
                     <div className="row full-height justify-content-center">
@@ -33,7 +33,7 @@ function SignUp() {
                                                     </div>
                                                     <div>
                                                         <button className="btn mt-4">Submit</button>
-                                                        <p className="mb-0 mt-4 text-center"><Link to="/forgot" className="link">Forgot your password?</Link></p>
+                                                        <p className="mb-0 mt-4 text-center"><Link to = "/forgot">Forgot password</Link></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,8 +75,6 @@ function SignUp() {
                     </div>
                 </div>
             </div>
-            <Route path="/forgot" component={Forgot} />
-        </Router>
     );
 }
 
