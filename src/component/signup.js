@@ -20,7 +20,7 @@ function SignUp() {
                     })
             })
             .catch((error) => {
-                console.log(error);
+                alert(error);
             });
     }
 
@@ -32,7 +32,7 @@ function SignUp() {
                 console.log(user.emailVerified);
             })
             .catch((error) => {
-                console.log(error);
+                alert(error);
             });
     }
 
