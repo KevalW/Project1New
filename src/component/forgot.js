@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 function Forgot() {
+  const [email, setEmail] = useState(" ");
   const [otpTimer, setOtpTimer] = useState(60); // Set initial timer value to 60 seconds
+
+  // sending mail to user for password reset
+  const auth = getAuth();
+  const mailSent = (i) => {
+    i.preventDefault();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        console.log("Email sent")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        alert(errorMessage)
+      });
+  }
 
   useEffect(() => {
     let intervalId;
@@ -46,8 +64,11 @@ function Forgot() {
                     <div className="center-wrap">
                       <div className="section text-center">
                         <h4 className="mb-4 pb-3">Verify Email Address</h4>
+                        {/* email */}
                         <div className="form-group">
-                          <input type="text" name="logname" className="form-style" placeholder="Enter Email Id" id="logname" autoComplete="off" />
+                          <input type="email" name="logname" className="form-style" placeholder="Enter Email Id" id="logname" autoComplete="off"
+                            value={email}
+                            onChange={(i) => setEmail(i.target.value)} />
                           <p className="mb-0 mt-4 text-center">
                             {otpTimer > 0 ? (
                               `Time remaining: ${otpTimer} seconds`
@@ -62,7 +83,7 @@ function Forgot() {
                           </div>
                         )}
                         <div>
-                          <button className="btn mt-4">Next</button>
+                          <button className="btn mt-4" onClick={mailSent}>Next</button>
                         </div>
                       </div>
                     </div>

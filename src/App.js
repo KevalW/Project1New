@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import SignUp from './component/signup';
+import Dashboard from './component/Dashboard';
 import Forgot from './component/forgot';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
@@ -25,8 +26,10 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/" element={<SignUp />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+
         </Routes>
       </Router>
     </div>

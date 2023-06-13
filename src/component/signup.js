@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+
 
 
 function SignUp() {
     const [email, setEmail] = useState(" ");
     const [password, setPassword] = useState("");
     const auth = getAuth();
+    const navigate = useNavigate();
 
     const signUp = (e) => {
         e.preventDefault();
@@ -16,11 +18,14 @@ function SignUp() {
                 console.log(userCredential);
                 sendEmailVerification(auth.currentUser)
                     .then(() => {
-                        console.log("mail sent");
+                        alert("verification mail sent");
+            
                     })
             })
             .catch((error) => {
-                alert(error);
+                // const errorMessage = error.message;
+                const errorCode = error.code;
+                alert(errorCode);
             });
     }
 
@@ -30,9 +35,17 @@ function SignUp() {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user.emailVerified);
+                if (user.emailVerified === true){
+                    alert("verified")
+                    
+                }else{
+                    alert("Not verified")
+                }
             })
             .catch((error) => {
-                alert(error);
+                //const errorMessage = error.message;
+                const errorCode = error.code;
+                alert(errorCode);
             });
     }
 
