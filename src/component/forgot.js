@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 function Forgot() {
+  const [otpTimer, setOtpTimer] = useState(60); // Set initial timer value to 60 seconds
+
+  useEffect(() => {
+    let intervalId;
+
+    // Start the timer countdown
+    if (otpTimer > 0) {
+      intervalId = setInterval(() => {
+        setOtpTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+    }
+
+    // Clear the interval when the timer reaches 0
+    if (otpTimer === 0) {
+      clearInterval(intervalId);
+    }
+
+    // Cleanup the interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [otpTimer]);
+
   return (
     <div className="section">
       <div className="container">
@@ -16,33 +40,53 @@ function Forgot() {
               <label htmlFor="reg-log"></label>
               <div className="card-3d-wrap mx-auto">
                 <div className="card-3d-wrapper">
+
+                  {/* Email Verify-------------------------------------------------------- */}
                   <div className="card-front">
                     <div className="center-wrap">
                       <div className="section text-center">
-                        <h4 className="mb-4 pb-3">Forgot Password</h4>
+                        <h4 className="mb-4 pb-3">Verify Email Address</h4>
                         <div className="form-group">
-                          <input type="text" name="logname" className="form-style" placeholder="Your Full Name" id="logname" autoComplete="off" />
-                          <i className="input-icon uil uil-user"></i>
+                          <input type="text" name="logname" className="form-style" placeholder="Enter Email Id" id="logname" autoComplete="off" />
+                          <p className="mb-0 mt-4 text-center">
+                            {otpTimer > 0 ? (
+                              `Time remaining: ${otpTimer} seconds`
+                            ) : (
+                              <Link to="/signup">Resend OTP</Link>
+                            )}
+                          </p>
                         </div>
-                        <div className="form-group mt-2">
-                          <select className="form-style">
-                            <option value="option1">Assistance Professor</option>
-                            <option value="option2">Class Teacher</option>
-                            <option value="option3">Head Of Department</option>
-                          </select>
-                          <i className="input-icon uil uil-user"></i>
+                        {otpTimer > 0 && (
+                          <div className="form-group mt-2">
+                            <input type="text" name="logname" className="form-style" placeholder="Enter OTP" id="logname" autoComplete="off" />
+                          </div>
+                        )}
+                        <div>
+                          <button className="btn mt-4">Next</button>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Email Verification End----------------------------------------------------- */}
+
+
+                  {/*  Change password------------------------------------------------------------*/}
+                  <div className="card-back">
+                    <div className="center-wrap">
+                      <div className="section text-center">
+                        <h4 className="mb-4 pb-3">Set New Password</h4>
+                        <div className="form-group">
+                          <input type="text" name="logname" className="form-style" placeholder="Enter New Password" id="logname" autoComplete="off" />
+                        </div><br></br>
                         <div className="form-group mt-2">
-                          <input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autoComplete="off" />
-                          <i className="input-icon uil uil-at"></i>
-                        </div>
-                        <div className="form-group mt-2">
-                          <input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autoComplete="off" />
-                          <i className="input-icon uil uil-lock-alt"></i>
+                          <input type="email" name="logemail" className="form-style" placeholder="Confirm Your Password" id="logemail" autoComplete="off" />
                         </div>
                         <div>
                           <button className="btn mt-4">Submit</button>
                         </div>
+                        {/* Change Password End---------------------------------------------------- */}
+
+
                       </div>
                     </div>
                   </div>
