@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 
@@ -19,11 +19,11 @@ function SignUp() {
                 sendEmailVerification(auth.currentUser)
                     .then(() => {
                         alert("verification mail sent");
+                        navigate("/")
             
                     })
             })
             .catch((error) => {
-                // const errorMessage = error.message;
                 const errorCode = error.code;
                 alert(errorCode);
             });
@@ -36,8 +36,7 @@ function SignUp() {
                 const user = userCredential.user;
                 console.log(user.emailVerified);
                 if (user.emailVerified === true){
-                    alert("verified")
-                    
+                    navigate("/dashboard")
                 }else{
                     alert("Not verified")
                 }

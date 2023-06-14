@@ -2,13 +2,15 @@ import React from 'react';
 import './App.css';
 import SignUp from './component/signup';
 import Dashboard from './component/Dashboard';
+import Error101 from './component/Error101';
 import Forgot from './component/forgot';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from 'firebase/auth';
 
 function App() {
-  
+
   const firebaseConfig = {
     apiKey: "AIzaSyBr4EgOQlmZiV3evHmbNyKmxlUYjX-qWfQ",
     authDomain: "marks-sheet-b7dff.firebaseapp.com",
@@ -21,7 +23,8 @@ function App() {
 
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-
+  const auth = getAuth();
+  const user = auth.currentUser;
   return (
     <div>
       <Router>
@@ -29,7 +32,7 @@ function App() {
           <Route path="/" element={<SignUp />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
-
+          <Route path="/error" element={<Error101 />}></Route>
         </Routes>
       </Router>
     </div>
